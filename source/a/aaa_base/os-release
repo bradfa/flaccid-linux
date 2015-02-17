@@ -1,0 +1,9 @@
+NAME=Flaccid
+VERSION="1"
+ID=flaccid
+VERSION_ID=1
+PRETTY_NAME="Flaccid 1"
+ANSI_COLOR="0;34"
+CPE_NAME="cpe:/o:flaccid:flaccid-linux:1"
+HOME_URL="http://github.com/bradfa/flaccid-linux
+BUG_REPORT_URL="http://github.com/bradfa/flaccid-linux/issues"

@@ -194,8 +194,14 @@ echo
 echo "Searching for symbolic links:"
 # Get rid of possible pre-existing trouble:
 INST=$(mktemp $TMP/makepkg.XXXXXX)
-# This requires the ls from coreutils-5.0 (or newer):
-find . -type l -exec ls -l --time-style=long-iso {} \; | while read foo ; do echo $foo ; done | cut -f 8- -d ' ' | cut -b3- | tee $INST
+# Find out if we're using busybox or coreutils ls command, create $INST
+if ls -le / 1>/dev/null 2>/dev/null; then
+	# Using busybox:
+	find . -type l -exec ls -le {} \; | while read foo ; do echo $foo ; done | cut -f 11- -d ' ' | cut -b3- | tee $INST
+else
+	# Using coreutils-5.0 (or newer):
+	find . -type l -exec ls -l --time-style=long-iso {} \; | while read foo ; do echo $foo ; done | cut -f 8- -d ' ' | cut -b3- | tee $INST
+fi
 if [ ! "$(cat $INST)" = "" ]; then
   echo
   echo "Making symbolic link creation script:"
@@ -284,14 +290,14 @@ echo
 rm -f ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
 case $EXTENSION in
 'tgz' | 'tar.gz' )
-  $TAR cvf - . | gzip -9c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
+  $TAR cvf - . | gzip -c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
   ERRCODE=$?
   if [ ! $? = 0 ]; then
     echo "ERROR:  gzip returned error code $? -- makepkg failed."
   fi
   ;;
 'tbz' | 'tar.bz2' )
-  $TAR cvf - . | bzip2 -9c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
+  $TAR cvf - . | bzip2 -c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
   ERRCODE=$?
   if [ ! $ERRCODE = 0 ]; then
     echo "ERROR:  bzip2 returned error code $ERRCODE -- makepkg failed."

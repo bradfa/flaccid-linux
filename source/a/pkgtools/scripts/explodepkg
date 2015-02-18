@@ -28,7 +28,7 @@ if [ $# = 0 ]; then
 Usage: explodepkg package_name [package_name2, ...]
 
 Explodes a Slackware compatible software package
-(or any tar+{gzip,bzip2,lzma,xz archive) in the current directory.
+(or any tar+{gzip,bzip2 archive) in the current directory.
 Equivalent to (for each package listed):
 
   ( umask 000 ; cat package_name | COMPRESSOR -dc | tar xvf package_name )
@@ -58,18 +58,6 @@ for PKG in $* ; do
     ;;
   'bz2' )
     packagecompression=bzip2
-    ;;
-  'tlz' )
-    packagecompression=lzma
-    ;;
-  'lzma' )
-    packagecompression=lzma
-    ;;
-  'txz' )
-    packagecompression=xz
-    ;;
-  'xz' )
-    packagecompression=xz
     ;;
   esac
   ( umask 000 ; cat $PKG | $packagecompression -dc | $TAR xvf - 2> /dev/null )

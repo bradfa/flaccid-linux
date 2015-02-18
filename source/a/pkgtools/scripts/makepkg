@@ -53,7 +53,7 @@ usage() {
   cat << EOF
 
 Usage: makepkg package_name.tgz
-       (or: package_name.tbz, package_name.tlz, package_name.txz)
+       (or: package_name.tbz)
 
 Makes a Slackware compatible package containing the contents of the current
 and all subdirectories.  If symbolic links exist, they will be removed and
@@ -124,14 +124,6 @@ elif [ ! "$(basename $PACKAGE_NAME .tbz)" = "$PACKAGE_NAME" ]; then
   EXTENSION="tbz"
 elif [ ! "$(basename $PACKAGE_NAME .tar.bz2)" = "$PACKAGE_NAME" ]; then
   EXTENSION="tar.bz2"
-elif [ ! "$(basename $PACKAGE_NAME .tlz)" = "$PACKAGE_NAME" ]; then
-  EXTENSION="tlz"
-elif [ ! "$(basename $PACKAGE_NAME .tar.lzma)" = "$PACKAGE_NAME" ]; then
-  EXTENSION="tar.lzma"
-elif [ ! "$(basename $PACKAGE_NAME .txz)" = "$PACKAGE_NAME" ]; then
-  EXTENSION="txz"
-elif [ ! "$(basename $PACKAGE_NAME .tar.xz)" = "$PACKAGE_NAME" ]; then
-  EXTENSION="tar.xz"
 else
   EXTENSION="$(echo $PACKAGE_NAME | rev | cut -f 1 -d . | rev)"
   echo "ERROR:  Package extension .$EXTENSION is not supported."
@@ -157,18 +149,6 @@ case $EXTENSION in
 'tbz' | 'tar.bz2' )
   if ! which bzip2 1> /dev/null 2> /dev/null ; then
     echo "ERROR:  bzip2 compression utility not found in \$PATH."
-    exit 3
-  fi
-  ;;
-'tlz' | 'tar.lzma' )
-  if ! which lzma 1> /dev/null 2> /dev/null ; then
-    echo "ERROR:  lzma compression utility not found in \$PATH."
-    exit 3
-  fi
-  ;;
-'txz' | 'tar.xz' )
-  if ! which xz 1> /dev/null 2> /dev/null ; then
-    echo "ERROR:  xz compression utility not found in \$PATH."
     exit 3
   fi
   ;;
@@ -287,20 +267,6 @@ case $EXTENSION in
   ERRCODE=$?
   if [ ! $ERRCODE = 0 ]; then
     echo "ERROR:  bzip2 returned error code $ERRCODE -- makepkg failed."
-  fi
-  ;;
-'tlz' | 'tar.lzma' )
-  $TAR cvf - . | lzma -c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
-  ERRCODE=$?
-  if [ ! $ERRCODE = 0 ]; then
-    echo "ERROR:  lzma returned error code $ERRCODE -- makepkg failed."
-  fi
-  ;;
-'txz' | 'tar.xz' )
-  $TAR cvf - . | xz -c > ${TARGET_NAME}/${TAR_NAME}.${EXTENSION}
-  ERRCODE=$?
-  if [ ! $ERRCODE = 0 ]; then
-    echo "ERROR:  xz returned error code $ERRCODE -- makepkg failed."
   fi
   ;;
 esac

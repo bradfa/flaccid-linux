@@ -45,7 +45,7 @@ installpkg \- install Slackware packages.
 ]
 .SH DESCRIPTION
 .B installpkg
-installs single or multiple *.tgz (or .tbz, .tlz, .txz) binary packages designed
+installs single or multiple *.tgz (or .tbz) binary packages designed
 for use with the Slackware Linux distribution onto your system.
 .SH OPTIONS
 .TP
@@ -91,7 +91,7 @@ will be used).  The default is "tagfile" in the package's directory.
 .TP
 .B Install a font package for X:
 .P
-installpkg font-bh-ttf-1.0.3-noarch-1.txz
+installpkg font-bh-ttf-1.0.3-noarch-1.tgz
 .P
 Note that if a package is already installed, upgradepkg(8) should be used instead.
 .TP
@@ -99,7 +99,7 @@ Note that if a package is already installed, upgradepkg(8) should be used instea
 .P
 .nf
 tar czvf /tmp/backup.tar.gz \\
-  $(installpkg --warn font-bh-ttf-1.0.3-noarch-1.txz)
+  $(installpkg --warn font-bh-ttf-1.0.3-noarch-1.tgz)
 .fi
 .SH AUTHOR
 Patrick J. Volkerding <volkerdi@slackware.com>

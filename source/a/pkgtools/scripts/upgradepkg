@@ -46,12 +46,6 @@ pkgbase() {
   'tbz' )
     PKGRETURN=$(basename $1 .tbz)
     ;;
-  'tlz' )
-    PKGRETURN=$(basename $1 .tlz)
-    ;;
-  'txz' )
-    PKGRETURN=$(basename $1 .txz)
-    ;;
   *)
     PKGRETURN=$(basename $1)
     ;;
@@ -65,7 +59,7 @@ usage() {
 Usage: upgradepkg newpackage [newpackage2 ... ]
        upgradepkg oldpackage%newpackage [oldpackage2%newpackage2 ... ]
 
-Upgradepkg upgrades a Slackware package (.tgz, .tbz, .tlz, .txz) from an
+Upgradepkg upgrades a Slackware package (.tgz, .tbz) from an
 older version to a newer one.  It does this by INSTALLING the new package
 onto the system, and then REMOVING any files from the old package that
 aren't in the new package.  If the old and new packages have the same
@@ -81,7 +75,7 @@ to be installed, remove the old ones manually prior to running upgradepkg.
 
 To upgrade in a directory other than / (such as /mnt):  
 
-   ROOT=/mnt upgradepkg package.tgz (or .tbz, .tlz, .txz)
+   ROOT=/mnt upgradepkg package.tgz (or .tbz)
 
 EOF
 }

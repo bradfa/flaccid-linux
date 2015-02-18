@@ -78,12 +78,6 @@ pkgbase() {
   'tbz' )
     PKGRETURN=$(basename $1 .tbz)
     ;;
-  'tlz' )
-    PKGRETURN=$(basename $1 .tlz)
-    ;;
-  'txz' )
-    PKGRETURN=$(basename $1 .txz)
-    ;;
   *)
     PKGRETURN=$(basename $1)
     ;;
@@ -113,8 +107,8 @@ usage() {
  cat << EOF
 Usage: installpkg [options] <package_filename>
 
-Installpkg is used to install a .t{gz,bz,lz,xz} package like this:
-   installpkg slackware-package-1.0.0-i486-1.tgz (or .tbz, .tlz, .txz)
+Installpkg is used to install a .t{gz,bz} package like this:
+   installpkg slackware-package-1.0.0-i486-1.tgz (or .tbz)
 
 options:      --warn (warn if files will be overwritten, but do not install)
               --root /mnt (install someplace else, like /mnt)
@@ -261,12 +255,6 @@ if [ "$MODE" = "warn" ]; then
     'tbz' )
       packagecompression=bzip2
       ;;
-    'tlz' )
-      packagecompression=lzma
-      ;;
-    'txz' )
-      packagecompression=xz
-      ;;
     esac
     ( cd $TMP/scan$$ ; $packagecompression -dc | $TAR xf - install ) < $1 2> /dev/null 
     if [ -r $TMP/scan$$/install/doinst.sh ]; then
@@ -308,17 +296,17 @@ for package in $* ; do
   fi
 
   # "shortname" isn't really THAT short...
-  # it's just the full name without ".t{gz,bz,lz,xz}"
+  # it's just the full name without ".t{gz,bz}"
   shortname="$(pkgbase $package)"
   packagedir="$(dirname $package)"
   # This is the base package name, used for grepping tagfiles and descriptions:
   packagebase="$(package_name $shortname)"
 
-  # Reject package if it does not end in '.t{gz,bz,lz,xz}':
+  # Reject package if it does not end in '.t{gz,bz}':
   if [ "$shortname" = "$(basename $package)" ]; then
     EXITSTATUS=3
     if [ "$MODE" = "install" ]; then
-      echo "Cannot install $package:  file does not end in .tgz, .tbz, .tlz, or .txz"
+      echo "Cannot install $package:  file does not end in .tgz or .tbz"
     fi
     continue;
   fi
@@ -333,12 +321,6 @@ for package in $* ; do
     ;;
   'tbz' )
     packagecompression=bzip2
-    ;;
-  'tlz' )
-    packagecompression=lzma
-    ;;
-  'txz' )
-    packagecompression=xz
     ;;
   esac
 

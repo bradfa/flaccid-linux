@@ -104,12 +104,6 @@ pkgbase() {
   'tbz' )
     PKGRETURN=$(basename $1 .tbz)
     ;;
-  'tlz' )
-    PKGRETURN=$(basename $1 .tlz)
-    ;;
-  'txz' )
-    PKGRETURN=$(basename $1 .txz)
-    ;;
   *)
     PKGRETURN=$(basename $1)
     ;;

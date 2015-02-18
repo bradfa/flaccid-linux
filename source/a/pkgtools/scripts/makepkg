@@ -270,17 +270,6 @@ find . -type f -size 0c | while read file ; do
   echo "WARNING:  zero length file $(echo $file | cut -b3-)"
 done
 
-# Warn of corrupt or empty gzip files:
-find . -type f -name '*.gz' | while read file ; do
-  if ! gzip -t $file 1> /dev/null 2> /dev/null ; then
-    echo "WARNING:  gzip test failed on $(echo $file | cut -b3-)"
-  else
-    if [ "$(gzip -l $file | tail -n 1 | tr -s ' ' | cut -f 3 -d ' ')" -eq 0 ]; then
-      echo "WARNING:  $(echo $file | cut -b3-) is an empty gzipped file"
-    fi
-  fi
-done
-
 # Some more handy warnings:
 if [ -d usr/share/man ]; then
   echo "WARNING:  /usr/share/man (with possibly not gzipped man pages) detected"

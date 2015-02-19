@@ -56,13 +56,6 @@ fi
 ADM_DIR=$ROOT/var/log
 PRES_DIR=$TMP/preserved_packages
 
-# This simple cat_except() should be used on the installer,
-# since the busybox "find" can't handle the complex find
-# syntax:
-#cat_except() {
-# ( cd "$1" && cat $(ls * | sed "/^$2\$/d"))
-#}
-
 # This version of cat_except() allows the last package to be
 # removed when ROOT= is used:
 cat_except() {

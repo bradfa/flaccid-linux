@@ -394,26 +394,6 @@ for package in $* ; do
     LENGTH=$(expr $LENGTH + 1)
   done
   echo "Size: Compressed: ${COMPRESSED}, uncompressed: ${UNCOMPRESSED}." >> $TMP/tmpmsg$$
-  # For recent versions of dialog it is necessary to add \n to the end of each line
-  # or it will remove repeating spaces and mess up our careful formatting:
-  cat << EOF > $TMP/controlns$$
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-\n
-EOF
-  paste -d "" $TMP/tmpmsg$$ $TMP/controlns$$ > $TMP/pasted$$
-  rm -f $TMP/controlns$$
-  mv $TMP/pasted$$ $TMP/tmpmsg$$
   # Emit information to the console:
   if [ "$MODE" = "install" ]; then
     if [ "$PMSG" = "" ]; then
@@ -475,7 +455,7 @@ EOF
     cat $DESCRIPTION | grep "^$shortname:" >> $ADM_DIR/packages/$shortname 2> /dev/null
   fi
   echo "FILE LIST:" >> $ADM_DIR/packages/$shortname
-  ( cd $ROOT/ ; $packagecompression -dc | $TAR -xlUpvf - ) < $package >> $TMP/$shortname 2> /dev/null
+  ( cd $ROOT/ ; $packagecompression -dc | $TAR -xvf - ) < $package >> $TMP/$shortname 2> /dev/null
   if [ "$(cat $TMP/$shortname | grep '^\./' | wc -l | tr -d ' ')" = "1" ]; then
     # Good.  We have a package that meets the Slackware spec.
     cat $TMP/$shortname >> $ADM_DIR/packages/$shortname

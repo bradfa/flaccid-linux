@@ -468,12 +468,6 @@ for package in $* ; do
   fi
   rm -f $TMP/$shortname
 
-  # It's a good idea to make sure those newly installed libraries
-  # are properly activated for use:
-  if [ -x /sbin/ldconfig ]; then
-    /sbin/ldconfig
-  fi
-
   if [ -f $ROOT/install/doinst.sh ]; then
     if [ "$MODE" = "install" ]; then
       echo "Executing install script for $(basename $package)."

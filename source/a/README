@@ -1,0 +1,14 @@
+a/ Directory
+============
+
+These packages are needed for all systems, they are not optional.
+
+Generally you should install these packages and never uninstall them.  Upgrading
+them should work without issue.
+
+Included are:
+
+* aaa_base - Base file system directory structure
+* busybox - Single tool to replace most common shell utilities
+* musl - libc, only the dynamically linked libraries (no headers / static libs)
+* pkgtools - Slackware package manager tools (with some features removed)

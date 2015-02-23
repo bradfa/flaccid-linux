@@ -41,6 +41,10 @@ OUTPUT=${OUTPUT:-/tmp}
 
 set -e
 
+if [ ! -e ${CWD}/${PRGNAM}-${VERSION}.tar.xz ]; then
+  wget http://ftp.barfooze.de/pub/sabotage/tarballs/${PRGNAM}-${VERSION}.tar.xz
+fi
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
